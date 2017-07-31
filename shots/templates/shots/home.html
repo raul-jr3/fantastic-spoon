@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+	home
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+	<div class="col-md-4">
+		
+	</div>
+	<div class="col-md-7" id="box">	
+	{% if shots %}
+		{% for shot in shots %}
+			<div id="box-header">
+				{% if shot.posted_by.profile.profile_photo %}
+					<img src="{{ shot.posted_by.profile.profile_photo.url }}" width="40" height="40" class="img-circle">
+				{% endif %}
+				<b id="box-header-username"><a href="{% url "shots:user_detail" shot.posted_by %}">{{ shot.posted_by }}</a></b>
+				<small id="content-created">{{ shot.created|naturaltime }}</small>
+			</div>
+			<div id="shot-content">
+				<img src="{{ shot.photo.url }}" class="img-responsive">
+			</div>
+			<div id="shot-likes-and-likes">
+				<p><b>{{ shot.likes.count }} like{{ shot.likes.count|pluralize }}</b></p>
+				<p><b><a href="{% url "shots:user_detail" shot.posted_by %}">{{ shot.posted_by }} </a></b> {{ shot.body|linebreaks }}</p>
+			</div><br>
+		{% endfor %}
+	{% endif %}
+	</div>
+	<div class="col-md-1">
+		
+	</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+	{{ request.user.username }}
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-md-6">
+			{% if user.profile.profile_photo %}
+				<img src="{{ user.profile.profile_photo.url }}" class="img-rounded img-responsive">
+			{% endif %}
+		</div>
+		<div class="col-md-4">
+			{% if user.profile.favourite_quote %}
+				<blockquote>
+					<h3>{{ user.profile.favourite_quote }}</h3>
+					<footer>{{ user.get_full_name }}</footer>
+				</blockquote>
+			{% endif %}
+		</div>
+	</div><br>
+	<div class="row" id="detail-bar">
+		<div class="col-md-3">
+			<h4>Joined:</h4>
+			<p><b>{{ user.date_joined|naturaltime }}</b></p>
+		</div>
+		<div class="col-md-3">
+			<h4>Last update:</h4>
+			<p><b>{{ user.profile.last_active|naturaltime }}</b></p>
+		</div>
+		<div class="col-md-3">
+			<h4>Last seen:</h4>
+			{% if user.is_active %}
+			<p><b>{{ user.username }} is online</b></p>
+			{% else %}
+			<p><b>{{ user.last_login|naturaltime }}</b></p>
+			{% endif %}
+		</div>
+	</div><br>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="jumbotron">
+				<p>{{ user.profile.bio|linebreaks }}</p>
+			</div>
+		</div>
+	</div>
+{% endblock %}

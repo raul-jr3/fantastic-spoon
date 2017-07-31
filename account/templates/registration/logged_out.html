@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}
+	logged-out
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-md-12">
+			<h1>IMDB</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<h4>You've been successfully logged out. You can login again <a href="{% url "account:login" %}">here</a>.</h4>
+		</div>
+	</div>
+{% endblock %}

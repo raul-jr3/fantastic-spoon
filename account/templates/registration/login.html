@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+	login
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-md-12">
+			<h1>IMDB</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-5 offset-md-3">
+			<form action="." method="POST">
+				{% csrf_token %}
+				{{ form|crispy }}
+				<input type="hidden" name="next" value="{{ next }}">
+				<button class="btn btn-success btn-block">login</button>
+			</form>
+			<h3>New to our site? Sign up <a href="{% url "account:register" %}">here</a>.</h3>
+		</div>
+	</div>
+{% endblock %}

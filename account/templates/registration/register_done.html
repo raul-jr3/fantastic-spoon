@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}
+	success
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-md-12">
+			<h1>IMDB</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<h3>Hello, {{ new_user.username }}</h3>
+			<p>You can now login <a href="{% url "account:login" %}">here</a>.</p>
+		</div>
+	</div>
+{% endblock %}
