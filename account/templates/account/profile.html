@@ -3,48 +3,69 @@
 {% load humanize %}
 
 {% block title %}
-	{{ request.user.username }}
+	{{ user.username }}
 {% endblock %}
 
 {% block content %}
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-5">
 			{% if user.profile.profile_photo %}
-				<img src="{{ user.profile.profile_photo.url }}" class="img-rounded img-responsive">
+				<div id="user-detail-photo">
+					<img src="{{ user.profile.profile_photo.url }}" class="img-circle" width="250" height="250">
+				</div>
 			{% endif %}
 		</div>
-		<div class="col-md-4">
-			{% if user.profile.favourite_quote %}
-				<blockquote>
-					<h3>{{ user.profile.favourite_quote }}</h3>
-					<footer>{{ user.get_full_name }}</footer>
-				</blockquote>
-			{% endif %}
+		<div class="col-md-2">
+			<h4>{{ posts.count }} post{{ posts.count|pluralize }} so far</h4>
 		</div>
-	</div><br>
-	<div class="row" id="detail-bar">
-		<div class="col-md-3">
-			<h4>Joined:</h4>
-			<p><b>{{ user.date_joined|naturaltime }}</b></p>
+
+		<div class="col-md-2">
+			<p><b>Member since:</b></p>
+			<p>{{ user.date_joined|timesince }}</p>
 		</div>
-		<div class="col-md-3">
-			<h4>Last update:</h4>
-			<p><b>{{ user.profile.last_active|naturaltime }}</b></p>
+		<div class="col-md-2">
+			<a href="{% url "account:edit" %}"><button class="btn btn-default">Edit Profile</button></a>
 		</div>
-		<div class="col-md-3">
-			<h4>Last seen:</h4>
-			{% if user.is_active %}
-			<p><b>{{ user.username }} is online</b></p>
-			{% else %}
-			<p><b>{{ user.last_login|naturaltime }}</b></p>
-			{% endif %}
+		<div class="col-md-7" style="padding-top: 30px;">
+			<p><b>{{ user.profile.bio|linebreaks }}</b></p>
 		</div>
-	</div><br>
+	</div><br><br>
 	<div class="row">
-		<div class="col-md-12">
-			<div class="jumbotron">
-				<p>{{ user.profile.bio|linebreaks }}</p>
-			</div>
-		</div>
+		{% if posts %}
+			{% for post in posts %}
+				<div class="col-md-3">
+					<div>
+						<img src="{{ post.photo.url }}" class=" img-responsive" style="width: 100%; height: 100%;">
+					</div>
+					<div style="background-color: #d3d3d3; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
+						
+						{% if post.likes.count > 0 %}
+							<a href="{% url "shots:likers_list" post.pk %}">
+								<p style="padding-left: 5px; padding-top: 5px;">
+									<b>{{ post.likes.count }} like{{ post.likes.count|pluralize }}</b> 
+									<a href="{% url "shots:edit" post.pk %}" style="float: right; padding-right: 15px;"><span class="glyphicon glyphicon-pencil"></span>
+									</a>
+									
+								</p>
+							</a>
+						{% else %}
+							<p style="padding-left: 5px; padding-top: 5px;">
+								<b>{{ post.likes.count }} like{{ post.likes.count|pluralize }}</b> 
+								<a href="{% url "shots:edit" post.pk %}" style="float: right; padding-right: 15px;"><span class="glyphicon glyphicon-pencil"></span>
+								</a>
+							</p>
+						{% endif %}
+						
+						
+						<p style="padding-left: 5px;"><b>{{ post.posted_by }}</b></p>
+						<div style="padding-left: 5px; padding-bottom: 1px;">
+							{{ post.body|linebreaks }}
+						</div>
+					</div>
+				</div><br>
+			{% endfor %}
+		{% else %}
+			<p><b>{{ user.username }}, you have not posted anything yet. Start posting <a href="{% url "shots:post" %}">here</a>.</b></p>
+		{% endif %}
 	</div>
 {% endblock %}

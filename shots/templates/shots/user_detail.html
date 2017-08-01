@@ -1,9 +1,54 @@
 {% extends "base.html" %}
+{% load static %}
+{% load humanize %}
 
 {% block title %}
 	{{ user.username }}
 {% endblock %}
 
 {% block content %}
-	<h1>{{ user.get_full_name }}</h1>
+	<div class="row">
+		<div class="col-md-5">
+			{% if user.profile.profile_photo %}
+				<div id="user-detail-photo">
+					<img src="{{ user.profile.profile_photo.url }}" class="img-circle" width="250" height="250">
+				</div>
+			{% endif %}
+		</div>
+		<div class="col-md-2">
+			<h4>{{ posts.count }} post{{ posts.count|pluralize }} so far</h4>
+		</div>
+		<div class="col-md-2">
+			<p><b>Last seen:</b></p>
+			{% if user.last_login == now %}
+				<p>User is online</p>
+			{% else %}
+				<p>{{ user.last_login|naturaltime }}</p>
+			{% endif %}
+		</div>
+		<div class="col-md-2">
+			<p><b>Member since:</b></p>
+			<p>{{ user.date_joined|timesince }}</p>
+		</div>
+		<div class="col-md-7" style="padding-top: 30px;">
+			<p><b>{{ user.profile.bio|linebreaks }}</b></p>
+		</div>
+	</div><br><br>
+	<div class="row">
+		{% if posts %}
+			{% for post in posts %}
+				<div class="col-md-3">
+					<div class="thumbnail">
+						<img src="{{ post.photo.url }}" class="img-rounded">
+					<div class="caption">
+						<p><b>{{ post.likes.count }} like{{ post.likes.count|pluralize }}</b></p>
+						<p><b>{{ post.posted_by }}</b> {{ post.body|linebreaks }}</p>
+					</div>
+					</div>
+				</div>
+			{% endfor %}
+		{% else %}
+			<p><b>{{ user.username }} has not posted any content yet.</b></p>
+		{% endif %}
+	</div>
 {% endblock %}

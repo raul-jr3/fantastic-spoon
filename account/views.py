@@ -3,11 +3,14 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 from .models import Profile 
+from shots.models import Image
 from .forms import UserRegisterForm, UserEditForm, ProfileEditForm
 
 
 def profile(request):
-	return render(request, 'account/profile.html')
+	#retrieve all the posts for this particular user
+	posts = Image.objects.filter(posted_by = request.user)
+	return render(request, 'account/profile.html', {'posts':posts})
 
 def register(request):
 	#check the method

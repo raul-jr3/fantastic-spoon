@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}
+	people who like this post
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			<h3>people who like this post:</h3><br>
+			{% for liker in likers %}
+				<div id="liker">
+					{% if liker.profile.profile_photo %}
+						<img src="{{ liker.profile.profile_photo.url }}" width="40" height="40" class="img-circle">
+					{% endif %}
+					<b style="padding-left: 10px;"><a href="{% url "shots:user_detail" liker.username %}">{{ liker.username }}</a></b>
+				</div><br>
+			{% endfor %}
+		</div>
+		<div class="col-md-4"></div>
+	</div>
+{% endblock %}
