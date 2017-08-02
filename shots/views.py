@@ -90,6 +90,11 @@ def likers_list(request, post_id):
 	return render(request, 'shots/likers.html', {'post':post, 'likers':likers})
 
 @login_required
+def delete(request, post_id):
+	post = get_object_or_404(Image, pk = post_id)
+	return render(request, 'shots/delete_warn.html', {'post':post})
+
+@login_required
 def delete_post(request, post_id):
 	#retrieve the post
 	post = get_object_or_404(Image, pk = post_id)

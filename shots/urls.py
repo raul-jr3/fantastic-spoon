@@ -17,5 +17,6 @@ urlpatterns = [
 				url(r'^dislike/(?P<post_id>[0-9]+)/$', views.remove_like, name = 'dislike'),
 				url(r'^likers-list/(?P<post_id>[0-9]+)/$', views.likers_list, name = 'likers_list'),
 				#delete posts
+				url(r'^delete-warn/(?P<post_id>[0-9]+)/$', views.delete, name = 'delete-warn'),
 				url(r'^delete/(?P<post_id>[0-9]+)/$', views.delete_post, name = 'delete'),
 				]

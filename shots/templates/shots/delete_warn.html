@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}
+	delete post
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-md-12">
+			<h1 style="font-family: 'Lobster Two', cursive;">{{ post.body|linebreaks }}</h1>
+		</div>
+	</div><br>
+	<div class="row">
+		<div class="col-md-4"></div>
+		<div class="col-md-5">
+			<img src="{{ post.photo.url }}" class="img-rounded img-responsive">
+			<h3>Are you sure you want to delete this post?</h3>
+			<a href="{% url "shots:delete" post.pk %}"><button class="btn btn-md btn-danger">delete</button></span></a>
+			<a href="{% url "account:profile" %}"><button class="btn btn-md btn-default">cancel, go back</button></span></a>
+		</div>
+	</div>
+{% endblock %}

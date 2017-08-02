@@ -38,6 +38,8 @@
 						<img src="{{ post.photo.url }}" class=" img-responsive" style="width: 100%; height: 100%;">
 					</div>
 					<div style="background-color: #d3d3d3; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
+						<a href="{% url "shots:delete-warn" post.pk %}" style="padding-left: 5px;"><span class="glyphicon glyphicon-trash"></span></a>
+						
 						
 						{% if post.likes.count > 0 %}
 							<a href="{% url "shots:likers_list" post.pk %}">
@@ -52,7 +54,7 @@
 							<p style="padding-left: 5px; padding-top: 5px;">
 								<b>{{ post.likes.count }} like{{ post.likes.count|pluralize }}</b> 
 								<a href="{% url "shots:edit" post.pk %}" style="float: right; padding-right: 15px;"><span class="glyphicon glyphicon-pencil"></span>
-								</a>
+									</a>
 							</p>
 						{% endif %}
 						
