@@ -19,4 +19,6 @@ urlpatterns = [
 				#delete posts
 				url(r'^delete-warn/(?P<post_id>[0-9]+)/$', views.delete, name = 'delete-warn'),
 				url(r'^delete/(?P<post_id>[0-9]+)/$', views.delete_post, name = 'delete'),
+				#comments
+				url(r'^comment/(?P<post_id>[0-9]+)/$', views.comment, name = 'comment'),
 				]

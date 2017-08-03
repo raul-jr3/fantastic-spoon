@@ -6,9 +6,10 @@ from django.contrib.auth.models import User
 
 
 from .models import Image 
-from .forms import PostForm
+from .forms import PostForm, CommentForm
 # Create your views here.
 def home(request):
+	#get all the shots
 	shots = Image.objects.all()
 	return render(request, 'shots/home.html', {'shots':shots})
 
@@ -50,6 +51,34 @@ def edit_post(request, post_id):
 		#give out the form with the previous details
 		form = PostForm(instance = post)
 	return render(request, 'shots/post.html', {'form':form, 'post':post})
+
+@login_required
+def comment(request, post_id):
+	#retrieve the post 
+	post = get_object_or_404(Image, pk = post_id)
+	#get all the comments for that post
+	comments = post.comments.all()
+	#check the method
+	if request.method == 'POST':
+		#populate the form with the user sumbitted data
+		form = CommentForm(data = request.POST)
+		#check if the data is valid
+		if form.is_valid():
+			#save the new comment
+			new_comment = form.save(commit = False)
+			#assign it that particular post
+			new_comment.post = post
+			#add the user who commented 
+			new_comment.commented_by = request.user 
+			#save the comment
+			new_comment.save()
+			#redirect him to the same page
+			return redirect('shots:comment', post.pk)
+
+	else:
+		#give out an empty form
+		form = CommentForm()
+	return render(request, 'shots/comment.html', {'form':form, 'post':post, 'comments':comments})
 
 @login_required
 def user_detail(request, username):

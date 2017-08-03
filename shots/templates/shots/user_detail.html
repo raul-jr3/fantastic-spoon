@@ -16,6 +16,8 @@
 			{% endif %}
 		</div>
 		<div class="col-md-2">
+			<h4><b>{{ user.get_full_name }}</b></h4>
+			<p>username : <b>{{ user.username }}</b></p>
 			<h4>{{ posts.count }} post{{ posts.count|pluralize }} so far</h4>
 		</div>
 		<div class="col-md-2">
@@ -41,7 +43,13 @@
 					<div class="thumbnail">
 						<img src="{{ post.photo.url }}" class="img-rounded">
 					<div class="caption">
-						<p><b>{{ post.likes.count }} like{{ post.likes.count|pluralize }}</b></p>
+						{% if post.likes.count > 0 and post.comments.count > 0 %}
+							<b><a href="{% url "shots:likers_list" post.pk %}">{{ post.likes.count }} like{{ post.likes.count|pluralize }}</a></b>,
+							<b><a href="{% url "shots:comment" post.pk %}">{{ post.comments.count }} comment{{ post.comment.count|pluralize }}</a></b>
+						{% else %}
+							<b>{{ post.likes.count }} like{{ post.likes.count|pluralize }}</b>,
+							<b>{{ post.comments.count }} comment{{ post.comment.count|pluralize }}</b>
+						{% endif %}
 						<p><b>{{ post.posted_by }}</b> {{ post.body|linebreaks }}</p>
 					</div>
 					</div>
