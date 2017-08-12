@@ -21,4 +21,6 @@ urlpatterns = [
 				url(r'^delete/(?P<post_id>[0-9]+)/$', views.delete_post, name = 'delete'),
 				#comments
 				url(r'^comment/(?P<post_id>[0-9]+)/$', views.comment, name = 'comment'),
+				#activity
+				url(r'^action/$', views.action, name = 'action'),
 				]

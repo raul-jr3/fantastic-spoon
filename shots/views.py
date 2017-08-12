@@ -5,13 +5,24 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User 
 
 
+from actions.utils import create_action
+
+from actions.models import Action
 from .models import Image 
 from .forms import PostForm, CommentForm
 # Create your views here.
+@login_required
 def home(request):
 	#get all the shots
 	shots = Image.objects.all()
 	return render(request, 'shots/home.html', {'shots':shots})
+
+@login_required
+def action(request):
+	#get all the actions except for the current user
+	actions = Action.objects.exclude(user = request.user)
+	#render it
+	return render(request, 'shots/action.html', {'actions':actions})
 
 @login_required
 def post(request):
@@ -26,6 +37,8 @@ def post(request):
 			new_post.posted_by = request.user
 			#save the object
 			new_post.save()
+			#add an action
+			create_action(request.user, 'added a new image', new_post)
 			#redirect the user to the home page
 			return redirect('shots:home')
 	else:
@@ -72,6 +85,8 @@ def comment(request, post_id):
 			new_comment.commented_by = request.user 
 			#save the comment
 			new_comment.save()
+			#add an action
+			create_action(request.user, 'added a new comment', new_comment)
 			#redirect him to the same page
 			return redirect('shots:comment', post.pk)
 
@@ -97,6 +112,8 @@ def add_like(request, post_id):
 	post = get_object_or_404(Image, pk = post_id)
 	#add a like from the user
 	post.likes.add(request.user)
+	#add an action
+	create_action(request.user, 'liked an image', post)
 	#redirect user to home
 	return redirect('shots:home')
 

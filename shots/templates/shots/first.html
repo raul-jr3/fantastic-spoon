@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>jQuery</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+		$('document').ready(function(){
+			$('#title').click(function(){
+				$('#stuff').toggle();
+			})
+		})
+	</script>
+</head>
+<body>
+	<div id="title">
+		<h1>Click on me to reveal stuff</h1>
+	</div>
+	<div id="stuff">
+		<h1>STUFF :P</h1>
+	</div>
+</body>
+</html>

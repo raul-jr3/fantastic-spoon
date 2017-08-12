@@ -26,6 +26,7 @@ def register(request):
 			new_user.save()
 			#create a new profile for the registered user
 			profile = Profile.objects.create(user = new_user)
+			#render it
 			return render(request, 'registration/register_done.html', {'new_user':new_user})
 
 	else:

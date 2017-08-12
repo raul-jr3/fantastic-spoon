@@ -35,6 +35,7 @@
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="{% url "account:profile" %}" style="color: black;">profile({{ request.user.username }})</a></li>
 						<li><a href="{% url "shots:post" %}" style="color: black;">post</a></li> 
+						<li><a href="{% url "shots:action" %}" style="color: black;">activity</a></li>
 						<li><a href="{% url "account:logout" %}" style="color: black;">logout</a></li> 
 					</ul>
 				{% else %}

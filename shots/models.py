@@ -30,3 +30,4 @@ class Comment(models.Model):
 
 	def __str__(self):
 		return "{} commented on {}".format(self.commented_by, self.post)
+

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+
+{% block title %}
+	comment
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			<h3>Activity</h3>
+			{% if actions %}
+				{% for action in actions %}
+					<p>
+					{% if action.user.profile.profile_photo %}
+						<img src="{{ action.user.profile.profile_photo.url }}" width="40" height="40" class="img-circle">
+					{% endif %}
+					{{ action.user }} {{ action.verb }}</p>
+					{% if action.target.photo %}
+						<img src="{{ action.target.photo.url }}" class="img-responsive img-rounded">
+					{% endif %}
+					<hr>
+				{% endfor %}
+			{% else %}
+				No activites yet. Check back later
+			{% endif %}
+		</div>
+		<div class="col-md-4"></div>
+	</div>
+{% endblock %}
