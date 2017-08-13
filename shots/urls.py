@@ -5,7 +5,7 @@ from . import views
 
 urlpatterns = [
 				#home
-				url(r'^home/$', views.home, name = 'home'),
+				url(r'^$', views.home, name = 'home'),
 				#adding new posts
 				url(r'^post/$', views.post, name = 'post'),
 				#edit 

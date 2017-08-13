@@ -1,5 +1,6 @@
 import datetime
 
+from django.core.cache import cache
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User 
@@ -13,8 +14,11 @@ from .forms import PostForm, CommentForm
 # Create your views here.
 @login_required
 def home(request):
-	#get all the shots
-	shots = Image.objects.all()
+	# add caching
+	shots = cache.get('all_shots')
+	if not shots:
+		shots = Image.objects.all()
+		cache.set('all_shots', shots)
 	return render(request, 'shots/home.html', {'shots':shots})
 
 @login_required
