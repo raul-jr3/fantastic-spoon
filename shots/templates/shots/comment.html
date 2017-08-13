@@ -11,7 +11,7 @@
 		<div class="col-md-4"></div>
 		<div class="col-md-4">
 			<h1 style="font-family: 'Lobster Two', cursive; font-weight: 30%;">Comment on:</h1>
-			<h2 style="font-family: 'Lobster Two', cursive; font-weight: 30%;">{{ post.body }}</h2>
+			<h2 style="font-family: 'Lobster Two', cursive; font-weight: 30%;">{{ post.body|markdown|linebreaks }}</h2>
 			<img src="{{ post.photo.url }}" class="img-rounded img-responsive">
 			<h3>{{ comments.count }} comment{{ comments.count|pluralize }}</h3>
 			<form action="." method="POST">
@@ -24,7 +24,7 @@
 			<h3 style="font-family: 'Lobster Two', cursive; font-weight: 30%;">Comments:</h3>
 			{% if comments %}
 				{% for comment in comments %}
-					<p><b><a href="{% url "shots:user_detail" comment.commented_by %}">{{ comment.commented_by }}</a></b> {{ comment.body|linebreaks }}</p>
+					<p><b><a href="{% url "shots:user_detail" comment.commented_by %}">{{ comment.commented_by }}</a></b> {{ comment.body|markdown|linebreaks }}</p>
 					<small>{{ comment.created|naturaltime }}</small><hr>
 				{% endfor %}
 			{% else %}

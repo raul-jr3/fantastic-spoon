@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load humanize %}
+{% load blog_tags %}
 
 {% block title %}
 	home
@@ -41,7 +42,7 @@
 				{% else %}
 					<b>{{ shot.comments.count }} comment{{ shot.comments.count|pluralize }}</b>
 				{% endif %}
-				<p><b><a href="{% url "shots:user_detail" shot.posted_by %}">{{ shot.posted_by }} </a></b> {{ shot.body|linebreaks }}</p>
+				<p><b><a href="{% url "shots:user_detail" shot.posted_by %}">{{ shot.posted_by }} </a></b> {{ shot.body|markdown|linebreaks }}</p>
 			</div><br>
 		{% endfor %}
 	{% endif %}
